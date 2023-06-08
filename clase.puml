@@ -1,0 +1,35 @@
+@startuml
+
+class WeatherDataProvider {
+  + get_weather(city: string): WeatherData
+  + register_observer(observer: Observer): void
+  + remove_observer(observer: Observer): void
+}
+
+class OpenWeatherMapDataProvider {
+  + __init__(api_key: string)
+  + register_observer(observer: Observer): void
+  + remove_observer(observer: Observer): void
+  + notify_observers(): void
+  + get_weather(city: string): WeatherData
+}
+
+class WeatherApp {
+  + __init__(weather_data_provider: WeatherDataProvider)
+  + update(): void
+  + get_weather_info(): void
+}
+
+class WeatherInfoDecorator {
+  + __init__(weather_data_provider: WeatherDataProvider)
+  + get_weather(city: string): WeatherData
+  + register_observer(observer: Observer): void
+  + remove_observer(observer: Observer): void
+  + notify_observers(): void
+}
+
+WeatherDataProvider <|.. OpenWeatherMapDataProvider
+WeatherApp -- WeatherDataProvider
+WeatherInfoDecorator -- WeatherDataProvider
+
+@enduml
